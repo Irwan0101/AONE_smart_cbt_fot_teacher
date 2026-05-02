@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { supabase } from '../lib/supabase';
 import Swal from 'sweetalert2';
-import logo from '../assets/ONE.png';
+import logo from '../assets/logo.jpg';
 
 const Login = ({ setSession }) => {
     const [token, setToken] = useState('');
