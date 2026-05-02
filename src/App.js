@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react';
+import Login from './components/Login';
+import Monitoring from './components/Monitoring';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [session, setSession] = useState(null);
+
+    useEffect(() => {
+        const saved = localStorage.getItem('min2_session');
+        if (saved) setSession(JSON.parse(saved));
+    }, []);
+
+    const handleLogout = () => {
+        localStorage.removeItem('min2_session');
+        setSession(null);
+    };
+
+    return (
+        <div className="App">
+            {!session ? (
+                <Login setSession={setSession} />
+            ) : (
+                <Monitoring session={session} onLogout={handleLogout} />
+            )}
+        </div>
+    );
 }
 
 export default App;
