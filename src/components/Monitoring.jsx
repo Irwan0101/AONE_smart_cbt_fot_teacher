@@ -7,7 +7,7 @@ import {
   BarChart3, Monitor as MonitorIcon, RefreshCcw, Trophy,
   CloudOff, Cloud, FileText, Download,
   ChevronUp, ChevronDown, Eye, Clock, TrendingUp, Activity,
-  Wifi, WifiOff, Bell, X, Menu, Shield, AlertTriangle
+  Wifi, WifiOff, Bell, X, Menu, AlertTriangle
 } from 'lucide-react';
 
 // ─── KONSTANTA ────────────────────────────────────────────────────────────────
