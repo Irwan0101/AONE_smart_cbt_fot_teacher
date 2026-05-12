@@ -45,7 +45,7 @@ function AppLayout({ session, onLogout }) {
     checkActiveExam();
     const interval = setInterval(checkActiveExam, 60_000);
     return () => clearInterval(interval);
-  }, []);
+  }, [session.id]);
 
   /* Sinkron dark mode ke <html> */
   useEffect(() => {
