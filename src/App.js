@@ -12,18 +12,52 @@ import PengawasPage from './pages/PengawasPage';
 import ReportPage   from './pages/ReportPage';
 import FloatingChat from './components/ui/Floatingchat';
 
-const PAGE_LABELS = {
-  dashboard: '🏠 Dashboard',
-  siswa:     '👥 Data Siswa',
-  banksoal:  '📚 Bank Soal',
-  jadwal:    '📅 Jadwal Ujian',
-  pengawas:  '🛡️ Pengawas',
-  report:    '📊 Report Nilai',
+import {
+  LayoutDashboard,
+  Users,
+  BookOpen,
+  CalendarDays,
+  ShieldCheck,
+  BarChart3,
+} from 'lucide-react';
+
+const PAGE_META = {
+  dashboard: { label: 'Dashboard',    icon: LayoutDashboard, color: '#6366f1' },
+  siswa:     { label: 'Data Siswa',   icon: Users,           color: '#10b981' },
+  banksoal:  { label: 'Bank Soal',    icon: BookOpen,        color: '#f59e0b' },
+  jadwal:    { label: 'Jadwal Ujian', icon: CalendarDays,    color: '#3b82f6' },
+  pengawas:  { label: 'Pengawas',     icon: ShieldCheck,     color: '#ef4444' },
+  report:    { label: 'Report Nilai', icon: BarChart3,       color: '#8b5cf6' },
 };
 
+/* ── Page Icon Badge ── */
+function PageBadge({ meta }) {
+  const Icon = meta.icon;
+  return (
+    <div className="flex items-center gap-2.5">
+      {/* icon pill */}
+      <div
+        className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0"
+        style={{
+          background: `${meta.color}18`,
+          border: `1.5px solid ${meta.color}30`,
+        }}
+      >
+        <Icon size={14} style={{ color: meta.color }} strokeWidth={2.2} />
+      </div>
+      <span
+        className="text-sm font-bold tracking-tight"
+        style={{ color: 'inherit' }}
+      >
+        {meta.label}
+      </span>
+    </div>
+  );
+}
+
 function AppLayout({ session, onLogout }) {
-  const [activePage, setActivePage]   = useState('dashboard');
-  const [theme, setTheme]             = useState(() => localStorage.getItem('theme') || 'light');
+  const [activePage, setActivePage]       = useState('dashboard');
+  const [theme, setTheme]                 = useState(() => localStorage.getItem('theme') || 'light');
   const [hasActiveExam, setHasActiveExam] = useState(false);
 
   /* Cek jadwal aktif hari ini setiap 1 menit */
@@ -69,10 +103,11 @@ function AppLayout({ session, onLogout }) {
     }
   };
 
+  const meta = PAGE_META[activePage] || PAGE_META.dashboard;
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950 transition-colors duration-300">
 
-      {/* Sidebar — handles desktop fixed + mobile drawer internally */}
       <Sidebar
         activePage={activePage}
         onNavigate={setActivePage}
@@ -83,26 +118,21 @@ function AppLayout({ session, onLogout }) {
         onLogout={onLogout}
       />
 
-      {/*
-        main:
-        - mobile/tablet : tidak ada margin kiri, tapi ada padding atas (pt-14)
-          supaya konten tidak tertutup topbar (h-14)
-        - desktop (lg+) : margin kiri 260px, tidak perlu padding atas
-      */}
       <main className="lg:ml-[260px] min-h-screen pt-14 lg:pt-0">
 
-        {/* Header — sticky di dalam main */}
-        <header className="sticky top-0 z-40 bg-white/80 dark:bg-gray-900/80 backdrop-blur border-b border-gray-200 dark:border-gray-800 px-4 sm:px-6 py-3 flex items-center justify-between">
-          <h1 className="text-sm font-bold text-gray-700 dark:text-gray-300">
-            {PAGE_LABELS[activePage] || '🏠 Dashboard'}
-          </h1>
-          <span className="hidden sm:block text-xs text-gray-400 dark:text-gray-500">
+        {/* ── Header ── */}
+        <header className="sticky top-0 z-40 bg-white/80 dark:bg-gray-900/80 backdrop-blur border-b border-gray-200 dark:border-gray-800 px-4 sm:px-6 py-3 flex items-center justify-between text-gray-700 dark:text-gray-300">
+
+          {/* Left: icon badge + page name */}
+          <PageBadge meta={meta} />
+
+          {/* Right: tanggal */}
+          <span className="hidden sm:block text-xs font-medium text-gray-400 dark:text-gray-500">
             {new Date().toLocaleDateString('id-ID', {
               weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
             })}
           </span>
-          {/* Tanggal ringkas di mobile */}
-          <span className="sm:hidden text-xs text-gray-400 dark:text-gray-500">
+          <span className="sm:hidden text-xs font-medium text-gray-400 dark:text-gray-500">
             {new Date().toLocaleDateString('id-ID', {
               day: 'numeric', month: 'short', year: 'numeric',
             })}
