@@ -15,8 +15,8 @@ import { supabase } from '../lib/supabase';
 ───────────────────────────────────────── */
 const MAPEL_LIST = [
   "Al Qur'an Hadits", 'Akidah Akhlak', 'Fikih', 'Bahasa Arab', 'SKI',
-  'Bahasa Indonesia', 'Matematika', 'IPA', 'IPS', 'PJOK',
-  'SBdP', 'Bahasa Inggris', 'BTQ', 'PABP', 'Bahasa Daerah',
+  'Bahasa Indonesia', 'Matematika', 'IPAS', 'PJOK',
+  'SBdP', 'Bahasa Inggris', 'BTQ', 'PKN',
 ];
 const TINGKAT_LIST = ['4', '5', '6'];
 const KATEGORI_LIST = ['Ujian Sekolah', 'UTS', 'UAS', 'Latihan', 'Try Out'];
